@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Gestión de Cartillas - Bingo</title>
+  <link rel="stylesheet" href="css/cartillas.css">
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>Gestión de Cartillas</h1>
+      <div style="margin-left:auto"><a href="index.html">Ir al Bingo</a></div>
+    </header>
+
+    <div class="panel">
+      <section class="left">
+        <h2>Generador / Paquetes</h2>
+        <div style="display:flex;gap:8px;align-items:center">
+          <label>Paquete: <select id="packageSelect"></select></label>
+          <button id="newPackage">Nuevo Paquete</button>
+          <button id="deletePackage" title="Borrar paquete seleccionado" style="background:#e53935">Borrar paquete</button>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
+          <label>Filas <input id="rows" type="number" value="5" min="1" max="10" style="width:70px"></label>
+          <label>Cols <input id="cols" type="number" value="5" min="1" max="10" style="width:70px"></label>
+          <label>Modo: <select id="bingoModeCart"><option value="90">90 bolas</option><option value="75">75 bolas</option></select></label>
+          <button id="genOne">Generar en paquete</button>
+        </div>
+        <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
+          <label style="display:flex;align-items:center;gap:6px">Nombre (opcional): <input id="cardName" type="text" placeholder="Nombre del cliente" style="width:160px"></label>
+        </div>
+        <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
+          <input id="manyCount" type="number" value="1" min="1" style="width:80px">
+          <button id="genMany">Generar N</button>
+          <button id="exportJson">Exportar JSON</button>
+          <button id="importJson">Importar JSON</button>
+        </div>
+
+        <h3 style="margin-top:12px">Cartillas (del paquete seleccionado)</h3>
+        <div class="search" style="margin-top:8px"><input id="cardSearch" placeholder="Buscar por ID o nombre..." style="width:100%;padding:8px;border-radius:6px;border:1px solid #ddd"></div>
+        <div class="ticket-list" id="ticketList"></div>
+      </section>
+
+      <aside class="right">
+        <h2>Detalle / Vista previa</h2>
+        <div id="preview" class="muted">Selecciona una cartilla para ver detalles</div>
+        <h3 style="margin-top:12px">Ganadores recientes</h3>
+        <div id="winnerList" class="muted">No hay ganadores recientes</div>
+        <h3 style="margin-top:12px">Patrones y premios</h3>
+        <div id="patternsPanel" class="muted">Selecciona un paquete para editar patrones.</div>
+        <div style="margin-top:10px;display:flex;gap:8px">
+          <button id="downloadSelected">Descargar seleccionada</button>
+          <button id="downloadAll">Descargar todas (apiladas)</button>
+          <button id="resetMarks" style="background:#e0a800">Reiniciar marcados</button>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="scripts/constants.js"></script>
+  <script src="scripts/storage.js"></script>
+  <script src="scripts/card-generator.js"></script>
+  <script src="scripts/card-renderer.js"></script>
+  <script src="scripts/patterns-manager.js"></script>
+  <script src="scripts/export-manager.js"></script>
+  <script src="scripts/cartillas-ui.js"></script>
+  <script src="scripts/cartillas-main.js"></script>
+</body>
+</html>
