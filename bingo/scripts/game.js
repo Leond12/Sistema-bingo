@@ -22,8 +22,6 @@ class GameManager {
     if (this.animationManager.animating) return;
     
     const full = StorageManager.loadFull();
-    
-    // Buscar números disponibles, priorizando cartillas ganadoras
     let available = this.getAvailableNumbersFromWinners(full);
     
     if (available.length === 0) {
@@ -36,13 +34,28 @@ class GameManager {
     }
 
     const target = available[Math.floor(Math.random() * available.length)];
-    
-    this.animationManager.animateToTarget(target, () => {
-      this.finalizeNumberDraw(target);
-    });
+    const animationsEnabled = document.getElementById('animToggle').checked;
     
     this.drawBtn.disabled = true;
     this.setStatus('animando...');
+    
+    if (!animationsEnabled) {
+      // Sin animación: procesar inmediatamente
+      this.processNumberImmediately(target);
+    } else {
+      // Con animación: usar el sistema de animación
+      this.animationManager.animateToTarget(target, () => {
+        this.finalizeNumberDraw(target);
+      });
+    }
+  }
+
+  processNumberImmediately(target) {
+    try {
+      AudioManager.playNumberSound(target);
+    } catch (e) {}
+    
+    this.finalizeNumberDraw(target);
   }
 
   getAvailableNumbersFromWinners(full) {
