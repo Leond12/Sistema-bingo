@@ -19,13 +19,32 @@ h1{margin:0;font-size:1.25rem}
 button{background:var(--accent);color:var(--accent-contrast);border:0;padding:10px 14px;border-radius:6px;cursor:pointer}
 button[aria-disabled="true"]{opacity:.6;cursor:not-allowed}
 .muted{color:var(--muted);font-size:.9rem}
-main{display:grid;grid-template-columns:1fr 360px 80px;gap:18px;margin-top:14px}
+main{display:grid;grid-template-columns: 1fr 420px 160px;gap:18px;margin-top:14px}
+
+/* Layout columns wrappers */
+.left-col{align-self:start}
+.left-col .board-card{position:sticky;top:18px;height:calc(100vh - 140px);overflow:auto;padding:10px;z-index:1}
+.left-col .board-card h2{margin-top:0}
+.center-col{display:flex;flex-direction:column;gap:12px}
+.controls-vertical{display:flex;flex-direction:column;gap:8px}
+.center-col .panel{flex:0 0 auto;z-index:2}
+.center-col .meta-image{height:110px;background:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden;max-width:420px;margin:0 auto;width:100%}
+.center-col .search-area{margin-top:auto;display:flex;flex-direction:column;align-items:center}
+.center-col .search{width:100%;display:flex;gap:8px}
+.center-col .search input{width:100%;padding:8px;border-radius:6px;border:1px solid #ddd}
+.right-col{display:flex;align-items:flex-start;justify-content:center}
+.right-col .panel{display:flex;flex-direction:column;align-items:center;gap:8px;z-index:3}
+.right-controls{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+
+/* Ensure buttons are on top and clickable */
+button{position:relative;z-index:4}
+
 
 /* Tablero */
 .board-card{background:var(--card);padding:12px;border-radius:10px;box-shadow:0 1px 6px rgba(0,0,0,.04)}
-.board{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;align-items:start} /* separación reducida (mitad) */
+.board{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;align-items:start} /* separación reducida (mitad) */
 .board .header{font-weight:900;text-align:center;padding:6px 0;background:#0b2540;color:#fff;border-radius:6px}
-.cell{background:linear-gradient(#fff,#f3f8ff);padding:10px;border-radius:6px;text-align:center;font-weight:800;user-select:none} /* numero un poco más grueso */
+.cell{background:linear-gradient(#fff,#f3f8ff);padding:6px;border-radius:6px;text-align:center;font-weight:900;font-size:0.95rem;user-select:none} /* numero más grueso y compacto */
 .cell:focus{outline:3px solid rgba(30,136,229,.25)}
 .cell.marked{background:linear-gradient(90deg,var(--marked),#ffd54a);color:#111}
 .cell.pulse{box-shadow:0 0 0 6px rgba(30,136,229,.12) inset}
@@ -53,6 +72,12 @@ input[type=number]{width:100%;padding:8px;margin-top:6px;border-radius:6px;borde
 .search{margin-top:10px;display:flex;gap:8px}
 .search input{flex:1;padding:8px;border-radius:6px;border:1px solid #ddd}
 
+/* Last number box */
+#lastNumberBox{width:50px;height:50px;background:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:22px}
+
+/* Responsive tweaks */
+@media(max-width:900px){main{grid-template-columns:1fr} .panel{order:2} .left-col .board-card{height:auto;max-height:none;overflow:visible} .right-col{order:3} .center-col{order:1}}
+
 /* Modal (no usado en index, se muestra en cartillas.html) */
 .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.35);padding:18px}
 .modal.show{display:flex}
@@ -63,3 +88,4 @@ footer{margin-top:12px;font-size:.9rem;color:var(--muted)}
 
 /* Responsive */
 @media(max-width:900px){main{grid-template-columns:1fr} .panel{order:2}}
+

@@ -72,7 +72,10 @@ class CartillasUI {
       const name = document.getElementById('cardName').value || '';
       const mode = document.getElementById('bingoModeCart').value;
       if (!pkgId) return alert('Selecciona paquete');
-      CardGenerator.generateBingoCardStandard(pkgId, name, mode);
+      const newCard = CardGenerator.generateBingoCardStandard(pkgId, name, mode);
+      // Re-render list and preview
+      CardRenderer.renderTicketList();
+      if (newCard) CardRenderer.showPreview(newCard.id);
     });
 
     document.getElementById('genMany').addEventListener('click', () => {
@@ -81,7 +84,10 @@ class CartillasUI {
       const name = document.getElementById('cardName').value || '';
       const mode = document.getElementById('bingoModeCart').value;
       if (!pkgId) return alert('Selecciona paquete');
-      CardGenerator.generateManyCards(n, pkgId, name, mode);
+      const cards = CardGenerator.generateManyCards(n, pkgId, name, mode);
+      // Re-render list and preview last generated card
+      CardRenderer.renderTicketList();
+      if (cards && cards.length) CardRenderer.showPreview(cards[cards.length - 1].id);
     });
 
     document.getElementById('exportJson').addEventListener('click', ExportManager.exportJson);

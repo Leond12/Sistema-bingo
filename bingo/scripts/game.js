@@ -96,6 +96,14 @@ class GameManager {
     
     // Actualizar vista previa si hay una cartilla en búsqueda
     this.updateSearchPreview();
+    // Update ticket list and preview if CardRenderer is available (index integration)
+    try {
+      if (typeof CardRenderer !== 'undefined') {
+        CardRenderer.renderTicketList();
+        const sel = document.querySelector('.ticket-item.selected');
+        if (sel) CardRenderer.showPreview(sel.dataset.id);
+      }
+    } catch (e) {}
     
     this.drawBtn.disabled = false;
     this.setStatus('listo — número: ' + target);

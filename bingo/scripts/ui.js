@@ -55,7 +55,7 @@ class UIManager {
         cellEl.style.padding = '6px';
         cellEl.style.borderRadius = '6px';
         
-        if (val === 'BINGO') {
+          if (val === 'BINGO') {
           cellEl.style.fontSize = '12px';
           cellEl.style.color = '#333';
           cellEl.style.textTransform = 'lowercase';

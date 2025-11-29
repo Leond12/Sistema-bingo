@@ -10,41 +10,56 @@
   <div class="app" id="app">
     <header>
       <h1>Generador de Bingo (local)</h1>
-      <div class="controls" role="region" aria-label="Controles principales">
-          <button id="drawBtn">Obtener número</button>
-        <button id="resetBtn">Reiniciar bingo</button>
-        <label class="small" for="animToggle">Animaciones</label>
-          <input id="animToggle" type="checkbox" checked aria-label="Activar animaciones">
-            <label style="align-self:center">Paquete: <select id="packageSelectGame" aria-label="Seleccionar paquete para el juego"></select></label>
-            <label style="align-self:center">Modo: <select id="bingoMode" aria-label="Seleccionar tipo de bingo"><option value="90">90 bolas</option><option value="75">75 bolas</option></select></label>
-          <button id="activatePackage">Activar paquete</button>
-      </div>
+      
     </header>
 
     <div id="status" class="muted" aria-live="polite" style="margin-top:8px">Estado: listo</div>
     <div id="activePkgInfo" class="muted" style="margin-top:6px">Paquete activo: ninguno</div>
 
-    <main>
-      <section class="board-card" aria-labelledby="boardTitle">
-        <h2 id="boardTitle">Tablero</h2>
-        <div id="board" class="board" tabindex="0" role="grid" aria-label="Tablero de números"></div>
-      </section>
+    <main class="layout">
+      <!-- LEFT - BOARD (sticky, scrollable) -->
+      <div class="left-col">
+        <section class="board-card" aria-labelledby="boardTitle">
+          <h2 id="boardTitle">Tablero</h2>
+          <div id="board" class="board" tabindex="0" role="grid" aria-label="Tablero de números"></div>
+        </section>
+      </div>
 
-      <aside class="panel" aria-labelledby="genCenter" id="centerPanel">
-        <h2 id="genTitle">Controles</h2>
-        <div style="display:flex;flex-direction:column;gap:8px">
-          <div id="metaImage" style="height:110px;background:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden"><span class="muted">Imagen del paquete (si existe)</span></div>
-          <div class="search" style="margin-top:8px;display:flex;gap:8px"><input id="searchCardInput" placeholder="Buscar ID de cartilla" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ddd"/></div>
-          <div id="searchPreview" style="display:none;margin-top:8px;"> <div id="searchPreviewBox" class="muted">Resultado: ninguna</div> <div style="margin-top:6px;display:flex;gap:8px"><button id="toggleSearchPreview">Mostrar/ocultar vista</button></div></div>
-          <a href="cartillas.html" style="text-decoration:none"><button>Ir a Gestión de Cartillas</button></a>
-          <div class="muted small">La gestión completa de cartillas está en <strong>cartillas.html</strong>.</div>
+      <!-- CENTER - meta image on top, controls in the middle, search at bottom -->
+      <div class="center-col">
+        <div id="metaImage" class="meta-image"><span class="muted">Imagen del paquete (si existe)</span></div>
+
+        <aside class="panel" aria-labelledby="genCenter" id="centerPanel">
+          <h2 id="genTitle">Controles</h2>
+          <div class="controls-vertical">
+            <!-- keep the existing controls intact (ids unchanged) -->
+            <label class="small" for="animToggle">Animaciones</label>
+            <input id="animToggle" type="checkbox" checked aria-label="Activar animaciones">
+            <label style="align-self:center">Paquete: <select id="packageSelectGame" aria-label="Seleccionar paquete para el juego"></select></label>
+            <label style="align-self:center">Modo: <select id="bingoMode" aria-label="Seleccionar tipo de bingo"><option value="90">90 bolas</option><option value="75">75 bolas</option></select></label>
+            <button id="activatePackage">Activar paquete</button>
+            <a href="cartillas.html" style="text-decoration:none"><button>Ir a Gestión de Cartillas</button></a>
+            <div class="muted small">La gestión completa de cartillas está en <strong>cartillas.html</strong>.</div>
+          </div>
+        </aside>
+
+        <div class="search-area">
+          <div class="search"><input id="searchCardInput" placeholder="Buscar ID de cartilla"/></div>
+          <div id="searchPreview" style="display:none;margin-top:8px;"><div id="searchPreviewBox" class="muted">Resultado: ninguna</div><div style="margin-top:6px;display:flex;gap:8px"><button id="toggleSearchPreview">Mostrar/ocultar vista</button></div></div>
         </div>
-      </aside>
+      </div>
 
-      <aside class="panel" aria-labelledby="genRight" id="rightPanel" style="display:flex;flex-direction:column;gap:8px;align-items:center;">
-        <div id="lastNumberBox" style="width:50px;height:50px;background:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:800200;font-size:18px">&nbsp;</div>
-        <div class="muted small">Último número</div>
-      </aside>
+      <!-- RIGHT - last number + action buttons -->
+      <div class="right-col">
+        <aside class="panel" aria-labelledby="genRight" id="rightPanel">
+          <div id="lastNumberBox">&nbsp;</div>
+          <div class="muted small">Último número contado</div>
+          <div class="right-controls">
+            <button id="drawBtn">Obtener número</button>
+            <button id="resetBtn">Reiniciar bingo</button>
+          </div>
+        </aside>
+      </div>
     </main>
 
     <!-- Gestión de cartillas movida a cartillas.html -->
