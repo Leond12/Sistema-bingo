@@ -52,65 +52,91 @@ class ExportManager {
   }
 
   static cardToDataURL(card, scale = 3) {
-    const cellSize = 40 * scale;
-    const padding = 10 * scale;
+    const cellSize = 30 * scale; // Mantenemos celdas pequeñas
+    const padding = 8 * scale;
+    const topMargin = 10 * scale;
+    const bottomMargin = 30 * scale; // Espacio extra en la parte inferior
     const w = card.cols * cellSize + padding * 2;
-    const h = card.rows * cellSize + padding * 2 + 40 * scale;
+    const h = card.rows * cellSize + padding * 2 + topMargin + bottomMargin; // Más altura total
     
     const canvas = document.createElement('canvas');
     canvas.width = w;
     canvas.height = h;
     const ctx = canvas.getContext('2d');
     
+    // Fondo blanco
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, w, h);
-    ctx.fillStyle = '#111';
-    ctx.font = (18 * scale) + 'px sans-serif';
     
+    // CELDA VACÍA ARRIBA DE TODO CON ID EN COSTADO IZQUIERDO
+    const emptyCellY = padding;
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(padding + 2, emptyCellY + 2, w - padding * 2 - 4, 18 * scale - 4);
+    ctx.strokeStyle = '#ddd';
+    ctx.strokeRect(padding + 2, emptyCellY + 2, w - padding * 2 - 4, 18 * scale - 4);
+    
+    // ID ARRIBA EN COSTADO IZQUIERDO (pequeño)
+    ctx.fillStyle = '#666';
+    ctx.font = (7 * scale) + 'px sans-serif';
+    const idText = 'ID: ' + card.id;
+    const idX = padding + 4 * scale;
+    const idY = emptyCellY + (18 * scale) / 2 + (2 * scale);
+    ctx.fillText(idText, idX, idY);
+    
+    // HEADERS B-I-N-G-O CENTRADOS
     const headers = ['B', 'I', 'N', 'G', 'O'];
+    const headerY = emptyCellY + 18 * scale + (10 * scale);
+    
     for (let i = 0; i < headers.length; i++) {
-      const hx = padding + i * cellSize;
-      ctx.fillStyle = '#0b2540';
-      ctx.fillRect(hx + 2, padding - (14 * scale), cellSize - 4, 20 * scale);
-      ctx.fillStyle = '#fff';
-      ctx.font = (14 * scale) + 'px sans-serif';
-      const m = ctx.measureText(headers[i]);
-      ctx.fillText(headers[i], hx + (cellSize - m.width) / 2, padding + (6 * scale));
+        const hx = padding + i * cellSize;
+        
+        ctx.fillStyle = '#e0a800';
+        ctx.fillRect(hx + 6, headerY, cellSize - 8, 20 * scale);
+        ctx.fillStyle = '#fff';
+        ctx.font = (12 * scale) + 'px sans-serif';
+        const m = ctx.measureText(headers[i]);
+        const tx = hx + (cellSize - m.width) / 2;
+        const ty = headerY + (20 * scale) / 2 + (2 * scale);
+        ctx.fillText(headers[i], tx, ty);
     }
     
-    ctx.fillStyle = '#111';
-    ctx.font = (14 * scale) + 'px sans-serif';
-    ctx.fillText('ID: ' + card.id, padding, (padding + cellSize * card.rows + 26 * scale));
+    // CELDAS DE NÚMEROS
+    const gridStartY = headerY + 16 * scale + (2 * scale);
     
     for (let r = 0; r < card.rows; r++) {
-      for (let c = 0; c < card.cols; c++) {
-        const x = padding + c * cellSize;
-        const y = padding + r * cellSize;
-        ctx.fillStyle = '#f3f6fb';
-        ctx.fillRect(x + 2, y + 2, cellSize - 4, cellSize - 4);
-        ctx.strokeStyle = '#ddd';
-        ctx.strokeRect(x + 2, y + 2, cellSize - 4, cellSize - 4);
-        
-        const val = card.numbers[r][c];
-        if (val === 'BINGO') {
-          ctx.fillStyle = '#444';
-          ctx.font = (12 * scale) + 'px sans-serif';
-          const txt = 'bingo';
-          const metrics = ctx.measureText(txt);
-          const tx = x + 2 + (cellSize - 4 - metrics.width) / 2;
-          const ty = y + (cellSize + 12 * scale) / 2 - 6 * scale;
-          ctx.fillText(txt, tx, ty);
-        } else {
-          ctx.fillStyle = '#111';
-          ctx.font = (14 * scale) + 'px sans-serif';
-          const txt = (val === undefined ? '' : String(val));
-          const metrics = ctx.measureText(txt);
-          const tx = x + 2 + (cellSize - 4 - metrics.width) / 2;
-          const ty = y + (cellSize + 14 * scale) / 2 - 6 * scale;
-          ctx.fillText(txt, tx, ty);
+        for (let c = 0; c < card.cols; c++) {
+            const x = padding + c * cellSize;
+            const y = gridStartY + r * cellSize;
+            
+            ctx.fillStyle = '#f3f6fb';
+            ctx.fillRect(x + 1, y + 1, cellSize - 2, cellSize - 2);
+            ctx.strokeStyle = '#ddd';
+            ctx.strokeRect(x + 1, y + 1, cellSize - 2, cellSize - 2);
+            
+            const val = card.numbers[r][c];
+            if (val === 'BINGO') {
+                // CELDA CENTRAL CON "BINGO"
+                ctx.fillStyle = '#444';
+                ctx.font = (8 * scale) + 'px sans-serif';
+                const txt = 'BINGO';
+                const metrics = ctx.measureText(txt);
+                const tx = x + 1 + (cellSize - 2 - metrics.width) / 2;
+                const ty = y + (cellSize + 8 * scale) / 2;
+                ctx.fillText(txt, tx, ty);
+            } else {
+                ctx.fillStyle = '#111';
+                ctx.font = (9 * scale) + 'px sans-serif';
+                const txt = (val === undefined ? '' : String(val));
+                const metrics = ctx.measureText(txt);
+                const tx = x + 1 + (cellSize - 2 - metrics.width) / 2;
+                const ty = y + (cellSize + 9 * scale) / 2;
+                ctx.fillText(txt, tx, ty);
+            }
         }
-      }
     }
+    
+    // ESPACIO EN BLANCO EN LA PARTE INFERIOR
+    // (ya está incluido en el cálculo de altura con bottomMargin)
     
     return canvas.toDataURL('image/png');
   }
