@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Generador de Bingo - Local</title>
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/main_additional.css">
 </head>
 <body>
   <div class="app" id="app">
     <header>
       <h1>Generador de Bingo (local)</h1>
-      
     </header>
 
     <div id="status" class="muted" aria-live="polite" style="margin-top:8px">Estado: listo</div>
@@ -53,7 +53,7 @@
       <div class="right-col">
         <aside class="panel" aria-labelledby="genRight" id="rightPanel">
           <div id="lastNumberBox">&nbsp;</div>
-          <div class="muted small">Último número contado</div>
+          <div class="muted small" style="font-size: 1.2rem; font-weight: 600; margin-top: 15px;">ÚLTIMO NÚMERO CONTADO</div>
           <div class="right-controls">
             <button id="drawBtn">Obtener número</button>
             <button id="resetBtn">Reiniciar bingo</button>
