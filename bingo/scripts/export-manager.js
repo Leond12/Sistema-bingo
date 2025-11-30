@@ -51,11 +51,11 @@ class ExportManager {
     inp.click();
   }
 
-  static cardToDataURL(card, scale = 3) {
+static cardToDataURL(card, scale = 3) {
     const cellSize = 30 * scale;
     const padding = 8 * scale;
     const topMargin = 10 * scale;
-    const bottomMargin = 30 * scale;
+    const bottomMargin = 55 * scale;
     const w = card.cols * cellSize + padding * 2;
     const h = card.rows * cellSize + padding * 2 + topMargin + bottomMargin;
     
@@ -76,32 +76,40 @@ class ExportManager {
     ctx.strokeRect(padding + 2, emptyCellY + 2, w - padding * 2 - 4, 18 * scale - 4);
     
     // ID ARRIBA EN COSTADO IZQUIERDO (pequeño)
-    ctx.fillStyle = '#666';
-    ctx.font = (7 * scale) + 'px sans-serif';
+    ctx.fillStyle = '#000000';
+    ctx.font = 'bold '+ (7 * scale) + 'px sans-serif';
     const idText = 'ID: ' + card.id;
     const idX = padding + 4 * scale;
     const idY = emptyCellY + (18 * scale) / 2 + (2 * scale);
     ctx.fillText(idText, idX, idY);
     
-    // HEADERS B-I-N-G-O CENTRADOS
+    // HEADERS B-I-N-G-O CENTRADOS - CAMBIO AQUÍ
     const headers = ['B', 'I', 'N', 'G', 'O'];
     const headerY = emptyCellY + 18 * scale + (10 * scale);
     
     for (let i = 0; i < headers.length; i++) {
         const hx = padding + i * cellSize;
         
-        ctx.fillStyle = '#e0a800';
-        ctx.fillRect(hx + 6, headerY, cellSize - 8, 20 * scale);
-        ctx.fillStyle = '#fff';
-        ctx.font = (12 * scale) + 'px sans-serif';
+        // FONDO BLANCO COMO LAS CELDAS DE NÚMEROS - CAMBIO AQUÍ
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(hx + 1, headerY, cellSize - 2, cellSize - 2);
+        
+        // BORDES NEGROS COMO LAS CELDAS DE NÚMEROS - CAMBIO AQUÍ
+        ctx.strokeStyle = '#000000';
+        ctx.lineWidth = 1.5 * scale;
+        ctx.strokeRect(hx + 1, headerY, cellSize - 2, cellSize - 2);
+        
+        // TEXTO EN NEGRITA Y MÁS GRANDE - CAMBIO AQUÍ
+        ctx.fillStyle = '#000000';
+        ctx.font = 'bold ' + (14 * scale) + 'px sans-serif'; // Más grande y en negrita
         const m = ctx.measureText(headers[i]);
-        const tx = hx + (cellSize - m.width) / 2;
-        const ty = headerY + (20 * scale) / 2 + (2 * scale);
+        const tx = hx + 1 + (cellSize - 2 - m.width) / 2;
+        const ty = headerY + (cellSize + 14 * scale) / 2;
         ctx.fillText(headers[i], tx, ty);
     }
     
     // CELDAS DE NÚMEROS - BORDES NEGROS Y NÚMEROS MÁS GRUESOS/OSCUROS
-    const gridStartY = headerY + 16 * scale + (2 * scale);
+    const gridStartY = headerY + cellSize + (2 * scale); // Ajuste en el espaciado
     
     for (let r = 0; r < card.rows; r++) {
         for (let c = 0; c < card.cols; c++) {
@@ -111,25 +119,25 @@ class ExportManager {
             ctx.fillStyle = '#f3f6fb';
             ctx.fillRect(x + 1, y + 1, cellSize - 2, cellSize - 2);
             
-            // BORDES NEGROS - CAMBIO AQUÍ
-            ctx.strokeStyle = '#000000'; // Negro puro
-            ctx.lineWidth = 1.5 * scale; // Borde más grueso
+            // BORDES NEGROS
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 1.5 * scale;
             ctx.strokeRect(x + 1, y + 1, cellSize - 2, cellSize - 2);
             
             const val = card.numbers[r][c];
             if (val === 'BINGO') {
                 // CELDA CENTRAL CON "BINGO" - MÁS GRUESO Y OSCURO
-                ctx.fillStyle = '#000000'; // Negro puro
-                ctx.font = 'bold ' + (9 * scale) + 'px sans-serif'; // Texto en negrita
+                ctx.fillStyle = '#000000';
+                ctx.font = 'bold ' + (9 * scale) + 'px sans-serif';
                 const txt = 'BINGO';
                 const metrics = ctx.measureText(txt);
                 const tx = x + 1 + (cellSize - 2 - metrics.width) / 2;
                 const ty = y + (cellSize + 9 * scale) / 2;
                 ctx.fillText(txt, tx, ty);
             } else {
-                // NÚMEROS - MÁS GRUESOS Y OSCUROS - CAMBIO AQUÍ
-                ctx.fillStyle = '#000000'; // Negro puro en lugar de #111
-                ctx.font = 'bold ' + (10 * scale) + 'px sans-serif'; // Texto en negrita y más grande
+                // NÚMEROS - MÁS GRUESOS Y OSCUROS
+                ctx.fillStyle = '#000000';
+                ctx.font = 'bold ' + (10 * scale) + 'px sans-serif';
                 const txt = (val === undefined ? '' : String(val));
                 const metrics = ctx.measureText(txt);
                 const tx = x + 1 + (cellSize - 2 - metrics.width) / 2;
@@ -140,8 +148,7 @@ class ExportManager {
     }
     
     return canvas.toDataURL('image/png');
-  }
-
+}
   static downloadCardImage(card) {
     const url = this.cardToDataURL(card);
     const a = document.createElement('a');
