@@ -85,10 +85,20 @@ class CardGenerator {
       matrix[2][2] = 'BINGO';
     }
 
+    // GENERAR ID SECUENCIAL - CAMBIO AQUÍ
     let id;
-    do {
-      id = this.makeId(8);
-    } while (pkg.cartillas.some(x => x.id === id));
+    const cartillasCount = pkg.cartillas.length;
+    const nextNumber = cartillasCount + 1;
+    
+    // Formatear como 0001, 0002, etc. (4 dígitos)
+    id = String(nextNumber).padStart(4, '0');
+    
+    // Verificar que no exista (por si acaso)
+    let counter = 1;
+    while (pkg.cartillas.some(x => x.id === id)) {
+      id = String(nextNumber + counter).padStart(4, '0');
+      counter++;
+    }
 
     const card = {
       id: id,

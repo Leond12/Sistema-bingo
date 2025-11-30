@@ -52,12 +52,12 @@ class ExportManager {
   }
 
   static cardToDataURL(card, scale = 3) {
-    const cellSize = 30 * scale; // Mantenemos celdas pequeñas
+    const cellSize = 30 * scale;
     const padding = 8 * scale;
     const topMargin = 10 * scale;
-    const bottomMargin = 30 * scale; // Espacio extra en la parte inferior
+    const bottomMargin = 30 * scale;
     const w = card.cols * cellSize + padding * 2;
-    const h = card.rows * cellSize + padding * 2 + topMargin + bottomMargin; // Más altura total
+    const h = card.rows * cellSize + padding * 2 + topMargin + bottomMargin;
     
     const canvas = document.createElement('canvas');
     canvas.width = w;
@@ -100,7 +100,7 @@ class ExportManager {
         ctx.fillText(headers[i], tx, ty);
     }
     
-    // CELDAS DE NÚMEROS
+    // CELDAS DE NÚMEROS - BORDES NEGROS Y NÚMEROS MÁS GRUESOS/OSCUROS
     const gridStartY = headerY + 16 * scale + (2 * scale);
     
     for (let r = 0; r < card.rows; r++) {
@@ -110,33 +110,34 @@ class ExportManager {
             
             ctx.fillStyle = '#f3f6fb';
             ctx.fillRect(x + 1, y + 1, cellSize - 2, cellSize - 2);
-            ctx.strokeStyle = '#ddd';
+            
+            // BORDES NEGROS - CAMBIO AQUÍ
+            ctx.strokeStyle = '#000000'; // Negro puro
+            ctx.lineWidth = 1.5 * scale; // Borde más grueso
             ctx.strokeRect(x + 1, y + 1, cellSize - 2, cellSize - 2);
             
             const val = card.numbers[r][c];
             if (val === 'BINGO') {
-                // CELDA CENTRAL CON "BINGO"
-                ctx.fillStyle = '#444';
-                ctx.font = (8 * scale) + 'px sans-serif';
+                // CELDA CENTRAL CON "BINGO" - MÁS GRUESO Y OSCURO
+                ctx.fillStyle = '#000000'; // Negro puro
+                ctx.font = 'bold ' + (9 * scale) + 'px sans-serif'; // Texto en negrita
                 const txt = 'BINGO';
-                const metrics = ctx.measureText(txt);
-                const tx = x + 1 + (cellSize - 2 - metrics.width) / 2;
-                const ty = y + (cellSize + 8 * scale) / 2;
-                ctx.fillText(txt, tx, ty);
-            } else {
-                ctx.fillStyle = '#111';
-                ctx.font = (9 * scale) + 'px sans-serif';
-                const txt = (val === undefined ? '' : String(val));
                 const metrics = ctx.measureText(txt);
                 const tx = x + 1 + (cellSize - 2 - metrics.width) / 2;
                 const ty = y + (cellSize + 9 * scale) / 2;
                 ctx.fillText(txt, tx, ty);
+            } else {
+                // NÚMEROS - MÁS GRUESOS Y OSCUROS - CAMBIO AQUÍ
+                ctx.fillStyle = '#000000'; // Negro puro en lugar de #111
+                ctx.font = 'bold ' + (10 * scale) + 'px sans-serif'; // Texto en negrita y más grande
+                const txt = (val === undefined ? '' : String(val));
+                const metrics = ctx.measureText(txt);
+                const tx = x + 1 + (cellSize - 2 - metrics.width) / 2;
+                const ty = y + (cellSize + 10 * scale) / 2;
+                ctx.fillText(txt, tx, ty);
             }
         }
     }
-    
-    // ESPACIO EN BLANCO EN LA PARTE INFERIOR
-    // (ya está incluido en el cálculo de altura con bottomMargin)
     
     return canvas.toDataURL('image/png');
   }
