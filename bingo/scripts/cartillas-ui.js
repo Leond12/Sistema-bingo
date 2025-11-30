@@ -31,7 +31,13 @@ class CartillasUI {
 
   static setupEventListeners() {
     document.getElementById('newPackage').addEventListener('click', () => {
-      const name = prompt('Nombre del paquete (opcional, dejar vacío para usar timestamp)') || '';
+      const name = prompt('Nombre del paquete (opcional, dejar vacío para usar timestamp)');
+      
+      // VERIFICAR SI EL USUARIO CANCELÓ - ESTA ES LA CORRECCIÓN
+      if (name === null) {
+        return; // El usuario presionó Cancelar, no hacer nada
+      }
+      
       const full = StorageManager.loadFull();
       const id = new Date().toISOString().replace(/:/g, '-').slice(0, 19);
       const pkg = {
