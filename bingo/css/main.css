@@ -247,6 +247,7 @@ main{
   text-transform: uppercase;
   letter-spacing: 1px;
 }
+
 .cell{
   background: linear-gradient(145deg, #2a3a4a, #1e2a3a);
   padding:10px;

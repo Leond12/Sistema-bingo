@@ -204,3 +204,116 @@ body {
     max-width: 48px !important;
   }
 }
+/* main_additional.css - Agregar estos estilos */
+
+/* main_additional.css - Estilos para la vista previa de cartillas en búsqueda */
+
+.search-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2px;
+  background: rgba(0,0,0,0.2);
+  padding: 8px;
+  border-radius: 8px;
+  max-width: 280px;
+  margin: 10px auto;
+}
+
+.search-preview-cell {
+  background: linear-gradient(145deg, #2a3a4a, #1e2a3a);
+  padding: 8px 4px;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: white;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  min-height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.search-preview-cell:hover {
+  transform: scale(1.03);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.search-preview-cell.marked {
+  background: linear-gradient(145deg, var(--casino-gold), #b8941f);
+  color: #000;
+  font-weight: 800;
+}
+
+/* Estilo específico para las celdas de encabezado (BINGO) */
+.search-preview-cell.header {
+  background: linear-gradient(145deg, var(--casino-red), var(--casino-red-dark));
+  color: white;
+  font-weight: 800;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 6px 2px;
+}
+
+/* Estilo para la celda central (FREE) */
+.search-preview-cell.free {
+  background: linear-gradient(145deg, var(--casino-gold), #b8941f);
+  color: #000;
+  font-weight: 800;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+/* Contenedor de la vista previa */
+#searchPreviewBox {
+  background: var(--casino-card);
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+#searchPreviewBox .muted {
+  color: var(--casino-gold-light);
+  font-weight: 600;
+  margin-bottom: 8px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+/* Información de la cartilla */
+.card-info {
+  text-align: center;
+  margin-top: 10px;
+  color: var(--casino-gold-light);
+  font-size: 0.85rem;
+  line-height: 1.3;
+}
+
+.card-info strong {
+  color: var(--casino-gold);
+}
+
+/* Mejoras responsive para la vista previa */
+@media (max-width: 768px) {
+  .search-preview-grid {
+    max-width: 240px;
+    padding: 6px;
+    gap: 1px;
+  }
+  
+  .search-preview-cell {
+    padding: 6px 2px;
+    font-size: 0.8rem;
+    min-height: 30px;
+  }
+  
+  .search-preview-cell.header,
+  .search-preview-cell.free {
+    font-size: 0.75rem;
+    padding: 4px 1px;
+  }
+}
