@@ -213,7 +213,7 @@ function showSearchPreview(card) {
         
         if (row === 2 && col === 2) {
           // Celda central - FREE (mismo estilo dorado que las celdas marcadas)
-          cellContent = 'FREE';
+          cellContent = 'BINGO';
           cellClass += ' free';
         } else {
           // Obtener el número de la posición correcta en la matriz
@@ -306,7 +306,7 @@ function showSearchPreviewRobust(card) {
     
     if (row === 2 && col === 2) {
       // Celda central FREE
-      cellContent = 'FREE';
+      cellContent = 'BINGO';
       cellClass += ' free';
     } else if (i < numbersMatrix.length) {
       cellContent = numbersMatrix[i] || '';

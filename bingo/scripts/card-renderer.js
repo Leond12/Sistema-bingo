@@ -80,7 +80,7 @@ class CardRenderer {
             mc.classList.add('marked');
           }
           mini.appendChild(mc);
-        }
+        } 
       }
 
       const nameHtml = c.name ? `<div style="font-weight:600">${this.escapeHtml(c.name)}</div>` : '';
@@ -157,10 +157,10 @@ class CardRenderer {
         const val = c.numbers[r][co];
         if (val === 'BINGO') {
           const marked = Array.isArray(c.markedNumbers) && c.markedNumbers.indexOf('BINGO') !== -1;
-          html += `<div class="ticket-cell${marked ? ' marked' : ''}" style="font-size:12px;color:#333;text-transform:lowercase">bingo</div>`;
+          html += `<div class="ticket-cell${marked ? ' marked' : ''}" style="background:#0b2540;color:#fff;padding:6px;border-radius:6px;font-size:14px">BINGO</div>`;
         } else {
           const marked = Array.isArray(c.markedNumbers) && c.markedNumbers.indexOf(val) !== -1;
-          html += `<div class="ticket-cell${marked ? ' marked' : ''}">${val === undefined ? '' : this.escapeHtml(String(val))}</div>`;
+          html += `<div class="ticket-cell${marked ? ' marked' : ''}" style="background:#0b2540;color:#fff;padding:6px;border-radius:6px">${val === undefined ? '' : this.escapeHtml(String(val))}</div>`;
         }
       }
     }

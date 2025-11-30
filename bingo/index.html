@@ -9,9 +9,21 @@
 </head>
 <body>
   <div class="app" id="app">
-    <header>
-      <h1>Generador de Bingo (local)</h1>
-    </header>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Generador de Bingo - Local</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/main_additional.css">
+  <style>
+    /* Oculta todos los elementos del header y estados */
+    header h1,
+    #status,
+    #activePkgInfo {
+      display: none;
+    }
+  </style>
+</head>
 
     <div id="status" class="muted" aria-live="polite" style="margin-top:8px"></div>
     <div id="activePkgInfo" class="muted" style="margin-top:6px"></div>
@@ -26,7 +38,7 @@
       </div>
 
       <!-- CENTER - meta image on top, controls in the middle, search at bottom -->
-      <div class="center-col">
+      <div class="center-col">  
         <aside class="panel" aria-labelledby="genCenter" id="centerPanel">
           <h2 id="genTitle">Controles</h2>
           <div class="controls-vertical">
@@ -62,7 +74,7 @@
 
     <!-- Gestión de cartillas movida a cartillas.html -->
 
-    <footer>Usa TAB para navegar. Mensajes de estado aparecen arriba.</footer>
+    <footer>Derechos de autor Bingo_RSA © </footer>
 
       <!-- winner modal removed from index; notifications will be shown only in cartillas.html -->
   </div>
